@@ -2,11 +2,14 @@
 
 ## Install
   
-* install  
-$ curl -s https://get.docker.com/ | sudo sh  
-$ sudo usermod -aG docker $USER // 현재 접속중인 사용자에게 권한주기 - sudo 없이 사용하기  
+* Docker 설치하기  
+$ curl -s https://get.docker.com/ | sudo sh    
+<code>_docker는 root 권한이 필요. root가 아닌 사용자에게 권한주기 - sudo 없이 사용하기_</code>  
+$ sudo usermod -aG docker $USER 
+$ sudo usermod -aG docker $(whoami)  
 $ docker version  
-  
+$ docker -v  
+$ docker-compose -v  
 
 * Docker 저장소 GPG key 추가  
 $ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 8118E89F3A912897C070ADBF76221572C52609D   
@@ -17,10 +20,6 @@ $ sudo apt-get update
 $ sudo apt-get install -y docker-engine  
 $ sudo apt-get install -y docker-compose
 
-* sudo 없이 명령어 사용하도록 설정  
-$ sudo usermod -aG docker $(whoami)  
-$ docker -v  
-$ docker-compose -v
 
 ## Uninstall
 _어떤 이유로 도커를 삭제하시고자 한다면 아래 처럼 간단히 삭제 할 수 있습니다._  
@@ -30,28 +29,30 @@ $ sudo rm -fR /var/lib/docker
 _사용자가 만든 디렉토리/파일은 사용자가 직접 삭제해야 합니다._
   
   
-  
+<br/><br/>
+
 ## 명령어
 
 * 이미지 가져오기  
 $ docker pull ubuntu
 
-* 이미지 가져오면서 실행하기  
+* 컨테이너 실행하기  
 _docker 이미지 run을 통해 컨테이너 생성과 함께 컨테이너 시작. 마지막엔 실행시킬 이미지명:태그를 입력합니다._  
 docker run <옵션> <이미지 이름> <실행할 파일>  
-$ docker run -i -t -d -p 80:80 -p 443:443 -p 8080:8080 --name dev-web dev-web:0.4  
+$ docker run -it -p 80:80 -p 443:443 -p 8080:8080 --name dev-web dev-web:0.4  
 
-<pre>
--i(interactive), -t(Pseudo-tty) 옵션을 사용하면 실행된 Bash 셸에 입력 및 출력을 할 수 있습니다.
---name 옵션으로 컨테이너의 이름을 지정할 수 있습니다. 이름을 지정하지 않으면 Docker가 자동으로 이름을 생성하여 지정합니다.
--d 옵션은 컨테이너를 백그라운드로 실행시키는 옵션입니다. 컨테이너 접속 후 해제하여도 컨테이너가 종료되지 않게 합니다.
--p 옵션으로 호스트 포트와 컨테이너 포트를 연결 합니다. -p 옵션을 추가하여 여러개의 포트를 연결할 수 있습니다. -p :
-–rm 프로세스 종료시 컨테이너 자동 제거
--v 호스트와 컨테이너의 디렉토리를 연결 (마운트)
--e 컨테이너 내에서 사용할 환경변수 설정
-</pre>
+|옵션|설명|
+|---|---|
+|-d|  detached mode 흔히 말하는 백그라운드 모드|
+|-p|	호스트와 컨테이너의 포트를 연결 (포워딩)|
+|-v|	호스트와 컨테이너의 디렉토리를 연결 (마운트)|
+|-e|	컨테이너 내에서 사용할 환경변수 설정|
+|–name|	컨테이너 이름 설정|
+|–rm|	프로세스 종료시 컨테이너 자동 제거|
+|-it|	-i와 -t를 동시에 사용한 것으로 터미널 입력을 위한 옵션|
+|–link|	컨테이너 연결 [컨테이너명:별칭]|
 
-* ubuntu image를 데몬으로 실행하기  
+* 최신 Ubuntu image를 데몬으로 실행하기  
 $ docker run -dit --name myUbuntu ubuntu:latest  
 $ docker run -it -p 8080:3000 -v /home  
   
@@ -78,15 +79,15 @@ $ docker push jmrose/nginx-python
 * 생성된 image 목록 보기  
 $ docker images -a  
   
-* Image Remove  
+* 이미지 삭제  
 $ docker rmi Image  
 _Delete name docker images force_  
 $ docker rmi -f $(docker images --filter "dangling=true" -q)  
   
-* 패턴으로 삭제  
+* 패턴으로 이미지 삭제  
 $ docker images -a | grep "pattern" | awk '{print $3}' | xargs docker rmi  
   
-* 전체 삭제  
+* 전체 이미지 삭제  
 $ docker rmi $(docker images -a -q)  
 $ docker rmi $(docker images -q)  
   
@@ -115,11 +116,22 @@ $ docker exec -it  c456623003b1 -c xxx
 $ docker exec -it [container id] /bin/zsh  
 $ docker exec -it  c456623003b1 /bin/zsh  
   
+##### Volume ( 참조 : [V](https://www.joinc.co.kr/w/man/12/docker/Guide/DataWithContainer) )
+* 볼륨 목록 확인  
+$ docker volume ls   
+  
+* 볼륨 삭제  
+$ docker volume rm xxxxxxxxxxxxx  
+  
+* 볼륨 정보 확인
+$ docker volume inspect xxxxxxxxxx  
   
   
+ <br/><br/>
 ## Error 모음
 
 <pre>
+docker 이미지 삭제 시 에러 :
 # docker rmi 013aeeba503d
 Error response from daemon: conflict: unable to delete 013aeeba503d (must be forced) - image is referenced in multiple repositories
 

@@ -117,7 +117,7 @@ $ docker exec -it  c456623003b1 -c xxx
 $ docker exec -it [container id] /bin/zsh  
 $ docker exec -it  c456623003b1 /bin/zsh  
   
-##### Volume ( 참조 : [V](https://www.joinc.co.kr/w/man/12/docker/Guide/DataWithContainer) )
+##### Volume
 * 볼륨 목록 확인  
 $ docker volume ls   
   
@@ -193,3 +193,4 @@ http://www.linux4u.co.kr/RedhatAS/s1-acls-setting-default.html
 
 ### 참조
 * [초보를 위한 도커 안내서](https://subicura.com/2017/01/19/docker-guide-for-beginners-1.html)  
+* [Docker Volume](https://www.joinc.co.kr/w/man/12/docker/Guide/DataWithContainer)

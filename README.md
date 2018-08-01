@@ -30,7 +30,6 @@ $ sudo rm -fR /var/lib/docker
 _사용자가 만든 디렉토리/파일은 사용자가 직접 삭제해야 합니다._
   
   
-<br/><br/>
 
 ## 명령어
 
@@ -124,7 +123,7 @@ $ docker volume ls
 * 볼륨 삭제  
 $ docker volume rm xxxxxxxxxxxxx  
   
-* 볼륨 정보 확인
+* 볼륨 정보 확인  
 $ docker volume inspect xxxxxxxxxx  
   
   

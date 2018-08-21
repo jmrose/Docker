@@ -1,7 +1,7 @@
 # Docker - Tutorial
 
   
-## Install
+### Install
   
 * Docker 설치하기  
 $ curl -s https://get.docker.com/ | sudo sh    
@@ -22,7 +22,7 @@ $ sudo apt-get install -y docker-engine
 $ sudo apt-get install -y docker-compose
 
 
-## Uninstall
+### Uninstall
 _어떤 이유로 도커를 삭제하시고자 한다면 아래 처럼 간단히 삭제 할 수 있습니다._  
 $ sudo apt-get autoremove --purge docker-engine  
 $ sudo rm -fR /var/lib/docker  
@@ -91,7 +91,7 @@ $ docker images -a | grep "pattern" | awk '{print $3}' | xargs docker rmi
 $ docker rmi $(docker images -a -q)  
 $ docker rmi $(docker images -q)  
   
-##### Container 명령어
+#### Container 명령어
 
 * List  
 $ docker ps -a  
@@ -116,7 +116,7 @@ $ docker exec -it  c456623003b1 -c xxx
 $ docker exec -it [container id] /bin/zsh  
 $ docker exec -it  c456623003b1 /bin/zsh  
   
-##### Volume
+#### Volume
 * 볼륨 목록 확인  
 $ docker volume ls   
   
@@ -134,7 +134,7 @@ $ docker volume inspect xxxxxxxxxx
   
 $ pip install uwsgi   
 $ uwsgi --ini uwsgi.ini // 실행하기  
-
+  
 
 ```uwsgi
 uwsgi.ini

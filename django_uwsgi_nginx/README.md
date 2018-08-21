@@ -30,13 +30,13 @@ touched most files here.
 * `docker run -d -p 80:80 webapp`
 
 ##### Add Volumn 
-* `docker run -d -p 80:80 -v /home/xxx/app:/home/docker/code/app webapp`
-* `docker run -d -p 8081:80 --name container_name -v /home/xxx/app:/home/docker/code/app webapp`
+* `docker run -d -p 80:80 -v /home/jmrose/app:/home/docker/code/app webapp`
+* `docker run -d -p 8081:80 --name container_name -v /home/jmrose/app:/home/docker/code/app webapp`
 
 ##### Bash Execute ( /bin/bash or bin/zsh )
 * `docker run -dit -p 80:80 webapp /bin/zsh`
 
-* `docker exec -it xxxxx /bin/bash`
+* `docker exec -it container_name /bin/bash`
 
 * go to 127.0.0.1 to see if works
 
@@ -54,15 +54,35 @@ Dockerfile
 
 uWSGI chdirs to /app so in uwsgi.ini you will need to make sure the python path
 to the wsgi.py file is relative to that.
-
-
-
+  
+  
+  
 ##### Mysql Setting
 * `$~/.pyenv/versions/app/bin/pip install mysqlclient`
 1. error : Not Found "mysql_config" >>> 
   `$ apt-get install libmysqlclient-dev python-dev`
 2. error : No module named 'ConfigParser' >>>
   `$ ~/.pyenv/versions/app/bin/pip install configparser`
+  
+  
+  
+### Etc Check list
+nginx static change ( - docker console )  
+$ vim /etc/nginx/sites-available/default  
+
+```nginx
+    location /media  {  
+        alias /home/docker/code/app/media;  # your Django project's media files - amend as required  
+    }  
+  
+    location /static {  
+        alias /home/docker/code/app/static; # your Django project's static files - amend as required  
+    }  
+```
+
+
+    
+  
 
 
 

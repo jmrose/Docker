@@ -31,5 +31,5 @@ grafana:
     - influxdb
   volumes:
     # Data persistency
-    # sudo mkdir -p /data/docker/grafana/data; chown 472:472 /srv/docker/grafana/data
+    # sudo mkdir -p /data/docker/grafana/data; chown 472:472 /data/docker/grafana/data
     - /data/docker/grafana/data:/var/lib/grafana

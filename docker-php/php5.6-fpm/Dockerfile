@@ -6,7 +6,7 @@ RUN apt-get update && \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
-        libpng12-dev \
+        libpng-dev \
         libgmp-dev \
         libxml2-dev \
         zlib1g-dev \
@@ -23,10 +23,7 @@ RUN apt-get update && \
         mysql-client \
         git \
         subversion \
-        wget && \
-    rm -rf /var/lib/apt/lists/* && \
-    wget https://getcomposer.org/download/1.2.4/composer.phar -O /usr/local/bin/composer && \
-    chmod a+rx /usr/local/bin/composer
+        wget
 
 RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h && \
     docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu && \
@@ -55,16 +52,8 @@ RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h && \
     pecl install xdebug && \
     pecl install memcached-2.2.0
 
-ADD http://www.zlib.net/zlib-1.2.11.tar.gz /tmp/zlib.tar.gz
-RUN tar zxpf /tmp/zlib.tar.gz -C /tmp && \
-    cd /tmp/zlib-1.2.11 && \
-    ./configure --prefix=/usr/local/zlib && \
-    make && make install && \
-    rm -Rf /tmp/zlib-1.2.11 && \
-    rm /tmp/zlib.tar.gz
 
-ENV LOCALTIME Europe/Paris
-ENV PHPFPM__access.format '"%R - %u [%t] \"%m %r\" %s %l %Q %f"'
+ENV LOCALTIME Asia/Soul
 
 RUN echo 'sendmail_path = /usr/sbin/ssmtp -t' >> $PHP_INI_DIR/conf.d/00-default.ini && \
     echo "\ninclude=/usr/local/etc/php-fpm.d/*.conf" >> /usr/local/etc/php-fpm.conf && \
@@ -77,7 +66,7 @@ WORKDIR /var/www
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php-fpm"]
-
+VOLUME ["/data", "/var/log/hello"]
 
 
 ### Special modifications for the www-data user.
